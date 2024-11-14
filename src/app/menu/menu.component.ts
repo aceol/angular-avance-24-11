@@ -1,9 +1,17 @@
 import { Component, inject } from '@angular/core';
 import { BasketService } from '../basket/basket.service';
+import { RouterLink } from '@angular/router';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
+    selector: 'app-menu',
+    templateUrl: './menu.component.html',
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgIf,
+        AsyncPipe,
+    ],
 })
 export class MenuComponent {
 

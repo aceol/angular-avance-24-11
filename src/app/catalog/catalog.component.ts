@@ -5,10 +5,22 @@ import { CatalogService } from './catalog.service';
 import { WELCOME_MSG } from '../app.token';
 import { catchError, EMPTY, Observable, tap, zip } from 'rxjs';
 import { AlertService } from '../alert/alert.service';
+import { RouterLink } from '@angular/router';
+import { NgFor, NgIf, AsyncPipe, CurrencyPipe } from '@angular/common';
+import { ProductComponent } from '../product/product.component';
 
 @Component({
-  selector: 'app-catalog',
-  templateUrl: './catalog.component.html',
+    selector: 'app-catalog',
+    templateUrl: './catalog.component.html',
+    standalone: true,
+    imports: [
+        RouterLink,
+        NgFor,
+        NgIf,
+        ProductComponent,
+        AsyncPipe,
+        CurrencyPipe,
+    ],
 })
 export class CatalogComponent implements OnInit{
   protected get isStockEmpty$(): Observable<boolean> {

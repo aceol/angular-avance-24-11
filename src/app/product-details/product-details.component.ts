@@ -5,11 +5,18 @@ import { ApiService } from '../shared/services/api.service';
 import { PRODUCT_DETAILS_PARAM_KEY } from './product-details.config';
 import { catchError, EMPTY, Observable } from 'rxjs';
 import { AlertService } from '../alert/alert.service';
+import { NgIf, AsyncPipe, CurrencyPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-product-details',
-  templateUrl: './product-details.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-product-details',
+    templateUrl: './product-details.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        NgIf,
+        AsyncPipe,
+        CurrencyPipe,
+    ],
 })
 export class ProductDetailsComponent {
   protected product$: Observable<Product>;

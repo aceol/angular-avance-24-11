@@ -13,24 +13,21 @@ import { WELCOME_MSG } from './app.token';
 import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
-  imports: [BrowserModule, AppRoutingModule],
-  providers: [
-    provideHttpClient(),
-    {
-      provide: WELCOME_MSG,
-      useValue: 'Bienvenue sur Zenika Ecommerce',
-    },
-  ],
-  declarations: [
-    AppComponent,
-    BasketComponent,
-    CatalogComponent,
-    FooterComponent,
-    MenuComponent,
-    ProductDetailsComponent,
-    ProductComponent,
-    AlertComponent,
-  ],
-  bootstrap: [AppComponent],
+    imports: [BrowserModule, AppRoutingModule, BasketComponent,
+        CatalogComponent,
+        FooterComponent,
+        MenuComponent,
+        ProductDetailsComponent,
+        ProductComponent,
+        AlertComponent],
+    providers: [
+        provideHttpClient(),
+        {
+            provide: WELCOME_MSG,
+            useValue: 'Bienvenue sur Zenika Ecommerce',
+        },
+    ],
+    declarations: [AppComponent],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}
