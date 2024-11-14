@@ -20,7 +20,7 @@ import { ProductComponent } from '../product/product.component';
     CurrencyPipe
 ],
 })
-export class CatalogComponent implements OnInit{
+export class CatalogComponent {
   protected get isStockEmpty$(): Observable<boolean> {
     return this.catalogService.isStockEmpty$;
   }
@@ -34,22 +34,6 @@ export class CatalogComponent implements OnInit{
   private catalogService = inject(CatalogService);
   protected welcomeMsg = inject(WELCOME_MSG);
   protected alertService = inject(AlertService);
-
-  constructor(
-  ) {
-  }
-
-  ngOnInit(): void {
-    zip([
-      this.basketService.fetch(),
-      this.catalogService.fetch()])
-    .pipe(
-      tap(() => this.alertService.addSuccess('Donnees bien recuperees')),
-      catchError((e) => {
-      this.alertService.addDanger('Impossible de recuperer les données')
-      console.error(e.message);
-      return EMPTY;})).subscribe()
-  }
 
   protected get products$(){
     return this.catalogService.products$
