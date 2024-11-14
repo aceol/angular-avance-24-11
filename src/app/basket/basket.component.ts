@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Customer } from '../customer/customer.types';
 import { BasketItem } from './basket.types';
 import { BasketService } from './basket.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-basket',
@@ -16,12 +17,17 @@ export class BasketComponent implements OnInit{
 
   protected customer: Customer = { name: '', address: '', creditCard: '' };
 
-  protected get basketTotal(): number {
+  protected get basketTotal$(): Observable<number> {
     return this.basketService.total;
   }
 
-  protected get basketItems(): BasketItem[] {
-    return this.basketService.items;
+  protected get basketItems$(): Observable<BasketItem[]> {
+    return this.basketService.items$;
+  }
+
+
+  protected get length$(): Observable<number> {
+    return this.basketService.numberOfItems$;
   }
 
   private basketService = inject(BasketService);

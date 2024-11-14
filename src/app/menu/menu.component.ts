@@ -9,7 +9,7 @@ export class MenuComponent {
 
   private basketService = inject(BasketService);
 
-  protected get numberOfBasketItems() {
-    return this.basketService.numberOfItems;
+  protected get numberOfBasketItems$() {
+    return this.basketService.numberOfItems$;
   }
 }

@@ -1,22 +1,21 @@
-import { Component, inject, Inject, OnInit } from '@angular/core';
-import { BasketItem } from '../basket/basket.types';
+import { Component, inject, OnInit } from '@angular/core';
 import { Product } from '../product/product.types';
-import { ApiService } from '../shared/services/api.service';
 import { BasketService } from '../basket/basket.service';
 import { CatalogService } from './catalog.service';
 import { WELCOME_MSG } from '../app.token';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
 })
 export class CatalogComponent implements OnInit{
-  protected get isStockEmpty(): boolean {
-    return this.catalogService.isStockEmpty;
+  protected get isStockEmpty$(): Observable<boolean> {
+    return this.catalogService.isStockEmpty$;
   }
 
 
-  protected get basketTotal(): number {
+  protected get basketTotal$(): Observable<number> {
     return this.basketService.total;
   }
 
@@ -33,8 +32,8 @@ export class CatalogComponent implements OnInit{
     this.catalogService.fetch().subscribe();
   }
 
-  protected get products(){
-    return this.catalogService.items
+  protected get products$(){
+    return this.catalogService.products$
   }
 
   protected addToBasket(product: Product): void {
@@ -44,7 +43,7 @@ export class CatalogComponent implements OnInit{
   }
 
   private decreaseStock(product: Product): void {
-    product.stock -= 1;
+    this.catalogService.decreaseStock$(product.id);
   }
 
   protected isAvailable(product: Product): boolean {
