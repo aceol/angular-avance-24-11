@@ -6,7 +6,7 @@ import { WELCOME_MSG } from '../app.token';
 import { catchError, EMPTY, Observable, tap, zip } from 'rxjs';
 import { AlertService } from '../alert/alert.service';
 import { RouterLink } from '@angular/router';
-import { NgFor, NgIf, AsyncPipe, CurrencyPipe } from '@angular/common';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
 import { ProductComponent } from '../product/product.component';
 
 @Component({
@@ -14,13 +14,11 @@ import { ProductComponent } from '../product/product.component';
     templateUrl: './catalog.component.html',
     standalone: true,
     imports: [
-        RouterLink,
-        NgFor,
-        NgIf,
-        ProductComponent,
-        AsyncPipe,
-        CurrencyPipe,
-    ],
+    RouterLink,
+    ProductComponent,
+    AsyncPipe,
+    CurrencyPipe
+],
 })
 export class CatalogComponent implements OnInit{
   protected get isStockEmpty$(): Observable<boolean> {

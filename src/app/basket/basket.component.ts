@@ -4,18 +4,16 @@ import { Customer } from '../customer/customer.types';
 import { BasketItem } from './basket.types';
 import { BasketService } from './basket.service';
 import { Observable } from 'rxjs';
-import { NgFor, NgIf, AsyncPipe, CurrencyPipe } from '@angular/common';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
 
 @Component({
     selector: 'app-basket',
     templateUrl: './basket.component.html',
     standalone: true,
     imports: [
-        NgFor,
-        NgIf,
-        AsyncPipe,
-        CurrencyPipe,
-    ],
+    AsyncPipe,
+    CurrencyPipe
+],
 })
 export class BasketComponent implements OnInit{
 

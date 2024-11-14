@@ -7,14 +7,20 @@ import { AppRoutingModule } from './app/app-routing.module';
 import { AppComponent } from './app/app.component';
 import { importProvidersFrom } from '@angular/core';
 
-bootstrapApplication(AppComponent, {
-    providers: [
-        importProvidersFrom(BrowserModule, AppRoutingModule),
-        provideHttpClient(),
-        {
-            provide: WELCOME_MSG,
-            useValue: 'Bienvenue sur Zenika Ecommerce',
-        },
-    ]
-})
+bootstrapApplication(AppComponent, appConfig())
   .catch((err) => console.error(err));
+
+
+
+function appConfig() {
+  return {
+    providers: [
+      importProvidersFrom(BrowserModule, AppRoutingModule),
+      provideHttpClient(),
+      {
+        provide: WELCOME_MSG,
+        useValue: 'Bienvenue sur Zenika Ecommerce',
+      },
+    ]
+  };
+}
