@@ -3,7 +3,8 @@ import { Product } from '../product/product.types';
 import { BasketService } from '../basket/basket.service';
 import { CatalogService } from './catalog.service';
 import { WELCOME_MSG } from '../app.token';
-import { Observable } from 'rxjs';
+import { catchError, EMPTY, Observable, tap, zip } from 'rxjs';
+import { AlertService } from '../alert/alert.service';
 
 @Component({
   selector: 'app-catalog',
@@ -22,14 +23,22 @@ export class CatalogComponent implements OnInit{
   private basketService = inject(BasketService);
   private catalogService = inject(CatalogService);
   protected welcomeMsg = inject(WELCOME_MSG);
+  protected alertService = inject(AlertService);
 
   constructor(
   ) {
   }
 
   ngOnInit(): void {
-    this.basketService.fetch().subscribe();
-    this.catalogService.fetch().subscribe();
+    zip([
+      this.basketService.fetch(),
+      this.catalogService.fetch()])
+    .pipe(
+      tap(() => this.alertService.addSuccess('Donnees bien recuperees')),
+      catchError((e) => {
+      this.alertService.addDanger('Impossible de recuperer les données')
+      console.error(e.message);
+      return EMPTY;})).subscribe()
   }
 
   protected get products$(){

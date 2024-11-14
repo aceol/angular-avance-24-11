@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from '../product/product.types';
 import { ApiService } from '../shared/services/api.service';
 import { PRODUCT_DETAILS_PARAM_KEY } from './product-details.config';
-import { Observable } from 'rxjs';
+import { catchError, EMPTY, Observable } from 'rxjs';
+import { AlertService } from '../alert/alert.service';
 
 @Component({
   selector: 'app-product-details',
@@ -16,10 +17,14 @@ export class ProductDetailsComponent {
   #apiService = inject(ApiService);
   #activatedRoute = inject(ActivatedRoute);
   #changeDetectorRef = inject(ChangeDetectorRef);
+  #alertService$ = inject(AlertService)
 
   constructor(
   ) {
     this.product$ = this.#apiService
-      .getProduct(this.#activatedRoute.snapshot.params[PRODUCT_DETAILS_PARAM_KEY]);
+      .getProduct(this.#activatedRoute.snapshot.params[PRODUCT_DETAILS_PARAM_KEY]).pipe(catchError((e) => {
+        this.#alertService$.addDanger('Probleme pour recup le produit');
+        return EMPTY;
+      }))
   }
 }
