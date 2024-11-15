@@ -9,9 +9,9 @@
 <h2 class="h4">Catalogue</h2>
 
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-  @for (product of (products$ | async) ; track product) {
+  @for (product of (products$ | async) ; track product.id) {
     @if (isAvailable(product)) {
-      <app-product class="col" [product]="product" (addToBasket)="addToBasket($event)" />
+      <app-product @stockout class="col" [product]="product" (addToBasket)="addToBasket($event)" />
     }
   }
 

@@ -12,7 +12,7 @@
           Voir mon panier
 
           @if (numberOfBasketItems$ | async; as numberOfBasketItems) {
-            <span class="position-absolute top-0 start-100 translate-middle badge bg-dark">
+            <span [@basketIncrement]="numberOfBasketItems" class="position-absolute top-0 start-100 badge bg-dark">
               {{ numberOfBasketItems }}
             </span>
           }

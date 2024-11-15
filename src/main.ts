@@ -4,6 +4,7 @@ import { PreloadAllModules, provideRouter, withComponentInputBinding, withPreloa
 import { AppComponent } from './app/app.component';
 import { appRoutes } from './app/app.routes';
 import { WELCOME_MSG } from './app/app.token';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 bootstrapApplication(AppComponent, appConfig()).catch((err) => console.error(err));
 
@@ -14,6 +15,7 @@ function appConfig() {
 
       provideRouter(appRoutes, withPreloading(PreloadAllModules), withComponentInputBinding()),
       provideHttpClient(withFetch()),
+      provideAnimationsAsync(),
       {
         provide: WELCOME_MSG,
         useValue: 'Bienvenue sur Zenika Ecommerce',
