@@ -17,7 +17,7 @@ export class BasketComponent implements OnInit {
   }
 
   protected get basketTotal$(): Observable<number> {
-    return this.basketService.total;
+    return this.basketService.total$;
   }
 
   protected get basketItems$(): Observable<BasketItem[]> {

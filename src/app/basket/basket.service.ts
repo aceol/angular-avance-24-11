@@ -12,28 +12,25 @@ export class BasketService {
 
   items$ = this.#items$.asObservable();
 
-  get total(): Observable<number> {
-    return this.items$
-      .pipe(map((items: BasketItem[]) => items.reduce((total, { price }) => total + price, 0)))
+  get total$(): Observable<number> {
+    return this.items$.pipe(map((items: BasketItem[]) => items.reduce((total, { price }) => total + price, 0)));
   }
 
   get numberOfItems$(): Observable<number> {
-    return this.items$
-      .pipe(map((items: BasketItem[]) => items.length));
+    return this.items$.pipe(map((items: BasketItem[]) => items.length));
   }
 
   private apiService = inject(ApiService);
 
   fetch(): Observable<BasketItem[]> {
-    return this.apiService.getBasket().pipe(tap((items) => (this.#items$.next(items))));
+    return this.apiService.getBasket().pipe(tap((items) => this.#items$.next(items)));
   }
 
   addItem(productId: string): Observable<BasketItem> {
-    return this.apiService.addToBasket(productId)
-      .pipe(tap((item) => this.#items$.next([...this.#items$.value, item])));
+    return this.apiService.addToBasket(productId).pipe(tap((item) => this.#items$.next([...this.#items$.value, item])));
   }
 
   checkout(customer: Customer): Observable<{ orderNumber: number }> {
-    return this.apiService.checkoutBasket(customer).pipe(tap(() => (this.#items$.next([]))));
+    return this.apiService.checkoutBasket(customer).pipe(tap(() => this.#items$.next([])));
   }
 }

@@ -25,7 +25,7 @@ export class CatalogComponent {
   }
 
   protected get basketTotal$(): Observable<number> {
-    return this.basketService.total;
+    return this.basketService.total$;
   }
 
   private basketService = inject(BasketService);

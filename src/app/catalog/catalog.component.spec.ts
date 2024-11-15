@@ -1,9 +1,13 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterModule } from '@angular/router';
-import { ApiService } from '../shared/services/api.service';
-import { MockApiService } from '../shared/services/api.service.mock';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { provideRouter, Router, RouterModule } from '@angular/router';
 import { CatalogComponent } from './catalog.component';
+import { WELCOME_MSG } from '../app.token';
+import { BasketService } from '../basket/basket.service';
+import { MockBasketService } from '../basket/basket.service.mock';
+import { CatalogService } from './catalog.service';
+import { MockCatalogService } from './catalog.service.mock';
+import { BasketComponent } from '../basket/basket.component';
 
 describe('CatalogComponent', () => {
   let component: CatalogComponent;
@@ -11,26 +15,41 @@ describe('CatalogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [RouterModule.forRoot([]), CatalogComponent],
-    providers: [
+      imports: [CatalogComponent],
+      providers: [
+        provideRouter([{ path: 'basket', component: BasketComponent }]),
         {
-            provide: ApiService,
-            useValue: MockApiService,
+          provide: BasketService,
+          useValue: MockBasketService,
         },
         {
-            provide: 'WELCOME_MSG',
-            useValue: 'Welcome to unit testing',
+          provide: CatalogService,
+          useValue: MockCatalogService,
         },
-    ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-});
+        {
+          provide: WELCOME_MSG,
+          useValue: 'Welcome to unit testing',
+        },
+      ],
+    });
 
     fixture = TestBed.createComponent(CatalogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
-    expect(component).toBeTruthy();
-  });
+  it('should navigate to the basket view when clicking on "Go to basket" button', waitForAsync(async () => {
+    // given
+    const router = TestBed.inject(Router);
+    const nativeElement = fixture.nativeElement as HTMLElement;
+
+    // when
+    nativeElement.querySelector<HTMLAnchorElement>('p > a')?.click();
+
+    await fixture.whenStable();
+
+    // then
+    console.log(router.url);
+    expect(router.url).toBe('/basket');
+  }));
 });
